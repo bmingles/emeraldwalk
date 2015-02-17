@@ -35,7 +35,7 @@ namespace Emeraldwalk.FileMirror.Plugins.Plugins
             this._userHost = args[0];
 
             this._psftpProcess = new ConsoleProcess(
-                @"C:\Program Files (x86)\PuTTY\psftp.exe",
+                @"psftp.exe",
                 this._sourceFullRootPath,
                 this._userHost);
 

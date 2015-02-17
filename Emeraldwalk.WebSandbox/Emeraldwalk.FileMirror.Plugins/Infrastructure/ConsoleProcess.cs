@@ -20,8 +20,8 @@ namespace Emeraldwalk.FileMirror.Plugins.Infrastructure
 
         private void InitializeProcess(
             string exePath,
-            string exeArgs,
-            string workingDir)
+            string workingDir,
+            string exeArgs)
         {
             Process process = new Process
             {
