@@ -4,16 +4,15 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{FF3611A3-293D-409C-9EE7-FB8D218ACF00}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <ProjectGuid>{FED748C6-E570-4775-B679-816859A2F933}</ProjectGuid>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Emeraldwalk.DirectoryWatch</RootNamespace>
-    <AssemblyName>Emeraldwalk.DirectoryWatch</AssemblyName>
+    <RootNamespace>Emeraldwalk.FileMirror.Plugins</RootNamespace>
+    <AssemblyName>Emeraldwalk.FileMirror.Plugins</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -23,16 +22,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup>
-    <ApplicationIcon>directory-watch.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -44,25 +39,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DirectoryWatchConfig.cs" />
-    <Compile Include="Model\FileSystemChangeEventArgs.cs" />
-    <Compile Include="Model\FileSystemChangeEventHandler.cs" />
-    <Compile Include="Model\FileSystemChangeType.cs" />
-    <Compile Include="Model\FileSystemObjectType.cs" />
-    <Compile Include="ProcessFileMode.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="Infrastructure\ConsoleProcess.cs" />
+    <Compile Include="Infrastructure\DisposableBase.cs" />
+    <Compile Include="Plugins\IFileMirrorPlugin.cs" />
+    <Compile Include="Plugins\PsftpFileMirrorPlugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\Concrete\DirectoryWatcher.cs" />
-    <Compile Include="Services\Concrete\DirectoryWatchService.cs" />
-    <Compile Include="Services\Abstract\ICommandArgsService.cs" />
-    <Compile Include="Services\Concrete\CommandArgsService.cs" />
-    <Compile Include="Services\Abstract\IDirectoryWatcher.cs" />
-    <Compile Include="Token.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Content Include="directory-watch.ico" />
-  </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

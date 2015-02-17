@@ -1,0 +1,2 @@
+pushd "%~dp0"
+..\..\Emeraldwalk.DirectoryWatch\bin\debug\Emeraldwalk.DirectoryWatch.exe target *.* "%~dp0\change-handler.bat" {ChangeType} {ObjectType} "{Changed}" "{ChangedNoX}" "{ChangedRel}" "{Original}" "{Each}" "{EachNoX}" "{EachRel}"

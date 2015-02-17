@@ -1,4 +1,5 @@
-﻿using Emeraldwalk.DirectoryWatch.Services.Abstract;
+﻿using Emeraldwalk.DirectoryWatch.Model;
+using Emeraldwalk.DirectoryWatch.Services.Abstract;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -24,16 +25,20 @@ namespace Emeraldwalk.DirectoryWatch.Services.Concrete
             this.DirectoryWatcher.Changed += _fileSystemWatcher_Changed;
         }
 
-        private void _fileSystemWatcher_Changed(object sender, FileSystemEventArgs e)
+        private void _fileSystemWatcher_Changed(object sender, FileSystemChangeEventArgs e)
         {
-            Console.WriteLine(e.FullPath + " changed.");
+            Console.WriteLine(string.Concat(e.FullPath, " ", e.ChangeType.ToString(), "."));
 
             IList<string> filesToProcess = this.GetFilesToProcess(e.FullPath);
 
             foreach (string filePathToProcess in filesToProcess)
             {
                 string argStr = this.ProcessFileCommandArgsService.BuildCommandArgs(
+                    e.ChangeType,
+                    e.FileSystemObjectType,
+                    this.Config.WatchDirectory,
                     e.FullPath,
+                    e.OriginalFullPath,
                     filePathToProcess,
                     this.Config.ExecutableArgs);
 

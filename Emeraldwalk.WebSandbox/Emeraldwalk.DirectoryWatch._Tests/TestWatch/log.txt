@@ -1,0 +1,72 @@
+******************* Something Changed ********************** 
+"Create" 
+"File" 
+"C:\code\GitHub\emeraldwalk\Emeraldwalk.WebSandbox\Emeraldwalk.DirectoryWatch._Tests\TestWatch\target\sub\New Text Document.txt" 
+"C:\code\GitHub\emeraldwalk\Emeraldwalk.WebSandbox\Emeraldwalk.DirectoryWatch._Tests\TestWatch\target\sub\New Text Document" 
+"sub\New Text Document.txt" 
+"" 
+"C:\code\GitHub\emeraldwalk\Emeraldwalk.WebSandbox\Emeraldwalk.DirectoryWatch._Tests\TestWatch\target\sub\New Text Document.txt" 
+"C:\code\GitHub\emeraldwalk\Emeraldwalk.WebSandbox\Emeraldwalk.DirectoryWatch._Tests\TestWatch\target\sub\New Text Document" 
+"sub\New Text Document.txt" 
+File 
+Create 
+******************* Something Changed ********************** 
+"Change" 
+"Directory" 
+"C:\code\GitHub\emeraldwalk\Emeraldwalk.WebSandbox\Emeraldwalk.DirectoryWatch._Tests\TestWatch\target\sub" 
+"C:\code\GitHub\emeraldwalk\Emeraldwalk.WebSandbox\Emeraldwalk.DirectoryWatch._Tests\TestWatch\target\sub" 
+"sub" 
+"" 
+"C:\code\GitHub\emeraldwalk\Emeraldwalk.WebSandbox\Emeraldwalk.DirectoryWatch._Tests\TestWatch\target\sub" 
+"C:\code\GitHub\emeraldwalk\Emeraldwalk.WebSandbox\Emeraldwalk.DirectoryWatch._Tests\TestWatch\target\sub" 
+"sub" 
+Dir 
+Change 
+******************* Something Changed ********************** 
+"Delete" 
+"File" 
+"C:\code\GitHub\emeraldwalk\Emeraldwalk.WebSandbox\Emeraldwalk.DirectoryWatch._Tests\TestWatch\target\sub\New Text Document.txt" 
+"C:\code\GitHub\emeraldwalk\Emeraldwalk.WebSandbox\Emeraldwalk.DirectoryWatch._Tests\TestWatch\target\sub\New Text Document" 
+"sub\New Text Document.txt" 
+"" 
+"C:\code\GitHub\emeraldwalk\Emeraldwalk.WebSandbox\Emeraldwalk.DirectoryWatch._Tests\TestWatch\target\sub\New Text Document.txt" 
+"C:\code\GitHub\emeraldwalk\Emeraldwalk.WebSandbox\Emeraldwalk.DirectoryWatch._Tests\TestWatch\target\sub\New Text Document" 
+"sub\New Text Document.txt" 
+File 
+Delete 
+******************* Something Changed ********************** 
+"Create" 
+"File" 
+"C:\code\GitHub\emeraldwalk\Emeraldwalk.WebSandbox\Emeraldwalk.DirectoryWatch._Tests\TestWatch\target\sub\old\New Text Document.txt" 
+"C:\code\GitHub\emeraldwalk\Emeraldwalk.WebSandbox\Emeraldwalk.DirectoryWatch._Tests\TestWatch\target\sub\old\New Text Document" 
+"sub\old\New Text Document.txt" 
+"" 
+"C:\code\GitHub\emeraldwalk\Emeraldwalk.WebSandbox\Emeraldwalk.DirectoryWatch._Tests\TestWatch\target\sub\old\New Text Document.txt" 
+"C:\code\GitHub\emeraldwalk\Emeraldwalk.WebSandbox\Emeraldwalk.DirectoryWatch._Tests\TestWatch\target\sub\old\New Text Document" 
+"sub\old\New Text Document.txt" 
+File 
+Create 
+******************* Something Changed ********************** 
+"Change" 
+"Directory" 
+"C:\code\GitHub\emeraldwalk\Emeraldwalk.WebSandbox\Emeraldwalk.DirectoryWatch._Tests\TestWatch\target\sub\old" 
+"C:\code\GitHub\emeraldwalk\Emeraldwalk.WebSandbox\Emeraldwalk.DirectoryWatch._Tests\TestWatch\target\sub\old" 
+"sub\old" 
+"" 
+"C:\code\GitHub\emeraldwalk\Emeraldwalk.WebSandbox\Emeraldwalk.DirectoryWatch._Tests\TestWatch\target\sub\old" 
+"C:\code\GitHub\emeraldwalk\Emeraldwalk.WebSandbox\Emeraldwalk.DirectoryWatch._Tests\TestWatch\target\sub\old" 
+"sub\old" 
+Dir 
+Change 
+******************* Something Changed ********************** 
+"Change" 
+"Directory" 
+"C:\code\GitHub\emeraldwalk\Emeraldwalk.WebSandbox\Emeraldwalk.DirectoryWatch._Tests\TestWatch\target\sub" 
+"C:\code\GitHub\emeraldwalk\Emeraldwalk.WebSandbox\Emeraldwalk.DirectoryWatch._Tests\TestWatch\target\sub" 
+"sub" 
+"" 
+"C:\code\GitHub\emeraldwalk\Emeraldwalk.WebSandbox\Emeraldwalk.DirectoryWatch._Tests\TestWatch\target\sub" 
+"C:\code\GitHub\emeraldwalk\Emeraldwalk.WebSandbox\Emeraldwalk.DirectoryWatch._Tests\TestWatch\target\sub" 
+"sub" 
+Dir 
+Change 

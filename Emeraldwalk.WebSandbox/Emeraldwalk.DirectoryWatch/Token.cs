@@ -8,9 +8,17 @@ namespace Emeraldwalk.DirectoryWatch
 {
     public static class Token
     {
-        public const string EachFilePath = "{Each}";
-        public const string EachFilePathNoExtension = "{EachNoX}";
-        public const string ChangedFilePath = "{Changed}";
-        public const string ChangedFilePathNoExtension = "{ChangedNoX}";
+        public const string ChangeType = "{ChangeType}";
+        public const string ObjectType = "{ObjectType}";
+
+        public const string ChangedPath = "{Changed}";
+        public const string ChangedPathNoExtension = "{ChangedNoX}";
+        public const string ChangedPathRelative = "{ChangedRel}";
+
+        public const string OriginalPath = "{Original}";
+
+        public const string EachPath = "{Each}";
+        public const string EachPathNoExtension = "{EachNoX}";
+        public const string EachPathRelative = "{EachRel}";
     }
 }
