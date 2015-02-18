@@ -39,11 +39,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Infrastructure\ConsoleProcess.cs" />
-    <Compile Include="Infrastructure\DisposableBase.cs" />
-    <Compile Include="Plugins\IFileMirrorPlugin.cs" />
     <Compile Include="Plugins\PsftpFileMirrorPlugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Emeraldwalk.FileMirror.Core\Emeraldwalk.FileMirror.Core.csproj">
+      <Project>{b1b89e94-ef85-4b58-a831-b23453869a11}</Project>
+      <Name>Emeraldwalk.FileMirror.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

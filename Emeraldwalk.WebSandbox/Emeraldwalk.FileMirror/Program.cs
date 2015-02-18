@@ -1,11 +1,9 @@
-﻿using Emeraldwalk.DirectoryWatch.Services.Abstract;
-using Emeraldwalk.DirectoryWatch.Services.Concrete;
-using Emeraldwalk.FileMirror.Plugins.Plugins;
+﻿using Emeraldwalk.FileMirror.Core.Plugins;
 using Emeraldwalk.FileMirror.Services;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
+using System.Reflection;
 
 namespace Emeraldwalk.FileMirror
 {
@@ -29,10 +27,10 @@ namespace Emeraldwalk.FileMirror
             Console.Title = string.Join(" ", args);
             Console.WriteLine(Console.Title);
             
-            IList<IFileMirrorPlugin> plugins = new List<IFileMirrorPlugin>
-            {
-                new PsftpFileMirrorPlugin()
-            };
+            string pluginDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            pluginDir = Path.Combine(pluginDir, "Plugins");
+            PluginService pluginService = new PluginService(pluginDir);
+            IList<IFileMirrorPlugin> plugins = pluginService.LoadPlugins();
 
             using (FileMirrorService fileMirrorService = new FileMirrorService(
                 watchDirectoryFullPath,

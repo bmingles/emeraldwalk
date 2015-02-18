@@ -1,8 +1,8 @@
 ﻿using Emeraldwalk.DirectoryWatch.Model;
 using Emeraldwalk.DirectoryWatch.Services.Abstract;
 using Emeraldwalk.DirectoryWatch.Services.Concrete;
-using Emeraldwalk.FileMirror.Plugins.Infrastructure;
-using Emeraldwalk.FileMirror.Plugins.Plugins;
+using Emeraldwalk.FileMirror.Core.Infrastructure;
+using Emeraldwalk.FileMirror.Core.Plugins;
 using System;
 using System.Collections.Generic;
 using System.Linq;

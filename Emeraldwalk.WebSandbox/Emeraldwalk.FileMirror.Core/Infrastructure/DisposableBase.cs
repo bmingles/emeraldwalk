@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Emeraldwalk.FileMirror.Plugins.Infrastructure
+namespace Emeraldwalk.FileMirror.Core.Infrastructure
 {
     public abstract class DisposableBase: IDisposable
     {

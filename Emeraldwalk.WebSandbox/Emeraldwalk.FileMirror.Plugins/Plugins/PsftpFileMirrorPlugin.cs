@@ -1,4 +1,5 @@
-﻿using Emeraldwalk.FileMirror.Plugins.Infrastructure;
+﻿using Emeraldwalk.FileMirror.Core.Infrastructure;
+using Emeraldwalk.FileMirror.Core.Plugins;
 using System;
 using System.IO;
 

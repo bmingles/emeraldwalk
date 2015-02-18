@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 
-namespace Emeraldwalk.FileMirror.Plugins.Infrastructure
+namespace Emeraldwalk.FileMirror.Core.Infrastructure
 {
     public class ConsoleProcess
     {

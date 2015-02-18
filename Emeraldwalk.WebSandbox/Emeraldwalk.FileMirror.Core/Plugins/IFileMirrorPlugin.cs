@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Emeraldwalk.FileMirror.Plugins.Plugins
+namespace Emeraldwalk.FileMirror.Core.Plugins
 {
     public interface IFileMirrorPlugin: IDisposable
     {

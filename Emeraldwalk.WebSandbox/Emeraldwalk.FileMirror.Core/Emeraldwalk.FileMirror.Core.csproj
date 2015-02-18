@@ -4,26 +4,24 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{B04AF338-CF38-42CE-9AAD-35B776A3D9E5}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <ProjectGuid>{B1B89E94-EF85-4B58-A831-B23453869A11}</ProjectGuid>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Emeraldwalk.FileMirror</RootNamespace>
-    <AssemblyName>Emeraldwalk.FileMirror</AssemblyName>
+    <RootNamespace>Emeraldwalk.FileMirror.Core</RootNamespace>
+    <AssemblyName>Emeraldwalk.FileMirror.Core</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG</DefineConstants>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -41,37 +39,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\Emeraldwalk.DirectoryWatch\Model\FileSystemChangeEventArgs.cs">
-      <Link>Model\FileSystemChangeEventArgs.cs</Link>
-    </Compile>
-    <Compile Include="..\Emeraldwalk.DirectoryWatch\Model\FileSystemChangeEventHandler.cs">
-      <Link>Model\FileSystemChangeEventHandler.cs</Link>
-    </Compile>
-    <Compile Include="..\Emeraldwalk.DirectoryWatch\Model\FileSystemChangeType.cs">
-      <Link>Model\FileSystemChangeType.cs</Link>
-    </Compile>
-    <Compile Include="..\Emeraldwalk.DirectoryWatch\Model\FileSystemObjectType.cs">
-      <Link>Model\FileSystemObjectType.cs</Link>
-    </Compile>
-    <Compile Include="..\Emeraldwalk.DirectoryWatch\Services\Abstract\IDirectoryWatcher.cs">
-      <Link>Services\IDirectoryWatcher.cs</Link>
-    </Compile>
-    <Compile Include="..\Emeraldwalk.DirectoryWatch\Services\Concrete\DirectoryWatcher.cs">
-      <Link>Services\DirectoryWatcher.cs</Link>
-    </Compile>
-    <Compile Include="Program.cs" />
+    <Compile Include="Infrastructure\ConsoleProcess.cs" />
+    <Compile Include="Infrastructure\DisposableBase.cs" />
+    <Compile Include="Plugins\IFileMirrorPlugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\FileMirrorService.cs" />
-    <Compile Include="Services\PluginService.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Emeraldwalk.FileMirror.Core\Emeraldwalk.FileMirror.Core.csproj">
-      <Project>{b1b89e94-ef85-4b58-a831-b23453869a11}</Project>
-      <Name>Emeraldwalk.FileMirror.Core</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1,12 +1,9 @@
-﻿using Emeraldwalk.FileMirror.Plugins;
-using Emeraldwalk.FileMirror.Plugins.Plugins;
+﻿using Emeraldwalk.FileMirror.Core.Plugins;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Emeraldwalk.FileMirror.Services
 {
@@ -27,6 +24,10 @@ namespace Emeraldwalk.FileMirror.Services
                 this._pluginDirectoryPath, "*.dll"))
             {
                 Assembly assembly = Assembly.LoadFile(dllPath);
+                foreach(Type pluginType in assembly.GetTypes().Where(type => type.GetInterface("IFileMirrorPlugin") != null))
+                {
+                    plugins.Add((IFileMirrorPlugin)Activator.CreateInstance(pluginType));
+                }
             }
 
             return plugins;
