@@ -35,7 +35,7 @@ namespace Emeraldwalk.FileMirror.Plugins.Plugins
             this._userHost = args[0];
 
             this._psftpProcess = new ConsoleProcess(
-                @"psftp.exe",
+                "psftp.exe",
                 this._sourceFullRootPath,
                 this._userHost);
 
@@ -72,13 +72,31 @@ namespace Emeraldwalk.FileMirror.Plugins.Plugins
             string fullPath)
         {
             string destinationPath = this.GetDestinationPath(fullPath);
+            string fullCmd;
 
-            Console.WriteLine(string.Concat(description, ": ", destinationPath));
+            switch(cmd)
+            {
+                case "mkdir":
+                case "rm":
+                case "rmdir":
+                    fullCmd = string.Format("{0} \"{1}\"",
+                        cmd,
+                        destinationPath);
+                    break;
 
-            this._psftpProcess.InputLine(string.Format("{0} \"{1}\" \"{2}\"",
-                cmd,
-                fullPath,
-                destinationPath));
+                case "put":
+                    fullCmd = string.Format("{0} \"{1}\" \"{2}\"",
+                        cmd,
+                        fullPath,
+                        destinationPath);
+                    break;
+
+                default:
+                    throw new NotSupportedException(string.Format("cmd '{0}' not supported.", cmd));
+            }
+
+            Console.WriteLine(fullCmd);
+            this._psftpProcess.InputLine(fullCmd);
         }
 
         public void CreateFile(string fullFilePath)

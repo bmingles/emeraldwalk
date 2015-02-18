@@ -5,6 +5,7 @@ using Emeraldwalk.FileMirror.Services;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace Emeraldwalk.FileMirror
 {
@@ -27,25 +28,21 @@ namespace Emeraldwalk.FileMirror
 
             Console.Title = string.Join(" ", args);
             Console.WriteLine(Console.Title);
-
-            IDirectoryWatcher directoryWatcher = new DirectoryWatcher();
-
+            
             IList<IFileMirrorPlugin> plugins = new List<IFileMirrorPlugin>
             {
                 new PsftpFileMirrorPlugin()
             };
 
-            using (new FileMirrorService(
+            using (FileMirrorService fileMirrorService = new FileMirrorService(
                 watchDirectoryFullPath,
                 destinationRootPath,
-                directoryWatcher,
+                watchFilter.Split('|'),
                 plugins,
                 q.ToArray()))
             {
                 //start watching directory
-                directoryWatcher.Start(
-                    watchDirectoryFullPath,
-                    watchFilter);
+                fileMirrorService.StartWatchers();
 
                 Console.WriteLine("Supported commands: exit, cls.");
 

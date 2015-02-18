@@ -1,5 +1,6 @@
 ﻿using Emeraldwalk.DirectoryWatch.Model;
 using Emeraldwalk.DirectoryWatch.Services.Abstract;
+using Emeraldwalk.DirectoryWatch.Services.Concrete;
 using Emeraldwalk.FileMirror.Plugins.Infrastructure;
 using Emeraldwalk.FileMirror.Plugins.Plugins;
 using System;
@@ -12,26 +13,40 @@ namespace Emeraldwalk.FileMirror.Services
     {
         private readonly string _sourceFullRootPath;
         private readonly string _targetRootPath;
-        private readonly IDirectoryWatcher _directoryWatcher;
+        private readonly IList<string> _filters;
+        private readonly IList<IDirectoryWatcher> _directoryWatchers;
         private readonly IList<IFileMirrorPlugin> _plugins;
         private readonly string[] _pluginArgs;
 
         public FileMirrorService(
             string sourceFullRootPath,
             string targetRootPath,
-            IDirectoryWatcher directoryWatcher,
+            IList<string> filters,
             IList<IFileMirrorPlugin> plugins,
             params string[] pluginArgs)
         {
             this._sourceFullRootPath = sourceFullRootPath;
             this._targetRootPath = targetRootPath;
-            this._directoryWatcher = directoryWatcher;
+            this._filters = filters;
             this._plugins = plugins;
             this._pluginArgs = pluginArgs;
 
-            InitializePlugins();
+            this._directoryWatchers = new List<IDirectoryWatcher>();
 
-            this._directoryWatcher.Changed += _directoryWatcher_Changed;
+            InitializePlugins();
+        }
+
+        public void StartWatchers()
+        {
+            foreach (string filter in this._filters)
+            {
+                IDirectoryWatcher watcher = new DirectoryWatcher();
+                watcher.Changed += _directoryWatcher_Changed;
+
+                this._directoryWatchers.Add(watcher);
+
+                watcher.Start(this._sourceFullRootPath, filter);
+            }
         }
 
         private void InitializePlugins()
