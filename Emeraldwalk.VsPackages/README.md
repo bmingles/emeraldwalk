@@ -30,6 +30,9 @@ Multiple paramemeterized commands can be configured to execute after a file save
 For secure file copy of saved file to remote server.
 
 ```
+// Desired output
 pscp "c:\localroot\dir\saved-file.txt" user@somehost.com:"/home/user/dir/saved-file.txt"
+
+// Parameterized command
 pscp "{LOCAL_FILE}" {REMOTE_USER}@{REMOTE_HOST}:"{REMOTE_FILE}"
 ```

@@ -199,7 +199,7 @@ namespace Emeraldwalk.Emeraldwalk_VsFileMirror.Views
         }
 
         [Category("Save Commands")]
-        [DisplayName("Commands")]
+        [DisplayName("Commands (1 per line)")]
         [Description("List of commands to execute on save")]
         [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
         public string OnSaveCommandsEditor
