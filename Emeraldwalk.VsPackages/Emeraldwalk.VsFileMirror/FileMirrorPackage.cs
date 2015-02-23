@@ -85,6 +85,12 @@ namespace Emeraldwalk.Emeraldwalk_VsFileMirror
                 return;
             }
 
+            if(!this.FilePathService.IsUnderLocalRoot(document.FullName))
+            {
+                this.Console.WriteLine("Local path '{0}' is not under local root path '{1}'.", document.FullName, this.Options.LocalRootPath);
+                return;
+            }
+
             ThreadPool.QueueUserWorkItem(state =>
             {
                 this.CommandService.RunOnSaveCommands(document.FullName);
