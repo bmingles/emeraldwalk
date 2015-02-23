@@ -1,0 +1,7 @@
+{
+	"local_root": "c:\\test",
+	"remote_host": "localhost",
+	"remote_user": "bingles",
+	"remote_root": "/bingles/home/target",
+	"remote_path_separator": "/"
+}
