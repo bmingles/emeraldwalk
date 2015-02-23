@@ -13,12 +13,17 @@ Configuration can be found under Tools -> Options -> Emeraldwalk -> File Mirror
 
 ## Commands
 Multiple paramemeterized commands can be configured to execute after a file save. Curly brace tokens can be used to inject values into the commands.
+
+### Derived
 * {LOCAL_FILE} - File saved in VS
+* {REMOTE_FILE} - Mirrored file on remote server
+
+### From Configuration (See above)
 * {LOCAL_ROOT}
 * {REMOTE_HOST}
 * {REMOTE_USER}
 * {REMOTE_ROOT}
-* {REMOTE_FILE}
+
 
 ## Example Commands
 ### PuTTY SCP (pscp.exe)
