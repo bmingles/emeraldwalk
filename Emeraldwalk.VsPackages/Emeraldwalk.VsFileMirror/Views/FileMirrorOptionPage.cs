@@ -23,11 +23,27 @@ namespace Emeraldwalk.Emeraldwalk_VsFileMirror.Views
 
         private UserControl _view;
 
-        private string MockRelativeFilePath
+        private string MockRelativeFilePathFormat
+        {
+            get { return "somedir{0}file-being-saved.txt"; }
+        }
+
+        private string MockRelativeLocalFilePath
         {
             get
             {
-                return string.Format("{0}somedir{0}file-being-saved.txt",
+                return string.Format(
+                    this.MockRelativeFilePathFormat,
+                    @"\");
+            }
+        }
+
+        private string MockRelativeRemoteFilePath
+        {
+            get
+            {
+                return string.Format(
+                    this.MockRelativeFilePathFormat,
                     this.RemotePathSeparatorCharacter);
             }
         }
@@ -38,8 +54,8 @@ namespace Emeraldwalk.Emeraldwalk_VsFileMirror.Views
             {
                 return CommandTokenService.ReplaceTokens(
                     this.OnSaveCommandsEditor,
-                    string.Format("{0}{1}", this.LocalRootPath, this.MockRelativeFilePath),
-                    string.Format("{0}{1}", this.RemoteRootPath, this.MockRelativeFilePath),
+                    string.Format(@"{0}\{1}", this.LocalRootPath, this.MockRelativeLocalFilePath),
+                    string.Format("{0}{1}{2}", this.RemoteRootPath, this.RemotePathSeparatorCharacter, this.MockRelativeRemoteFilePath),
                     this);
             }
         }
@@ -130,6 +146,14 @@ namespace Emeraldwalk.Emeraldwalk_VsFileMirror.Views
         }
 
         [Category("Local Config")]
+        [DisplayName(CommandTokens.LOCAL_FILE)]
+        [Description("Local file path")]
+        public string LocalFilePath
+        {
+            get { return Path.Combine(this.LocalRootPath, this.MockRelativeLocalFilePath); }
+        }
+
+        [Category("Local Config")]
         [DisplayName(CommandTokens.LOCAL_ROOT)]
         [Description("Local root path")]
         public string LocalRootPath { get; set; }
@@ -167,9 +191,10 @@ namespace Emeraldwalk.Emeraldwalk_VsFileMirror.Views
         {
             get
             {
-                return string.Format("{0}{1}",
+                return string.Format("{0}{1}{2}",
                     CommandTokens.REMOTE_ROOT,
-                    this.MockRelativeFilePath);
+                    this.RemotePathSeparatorCharacter,
+                    this.MockRelativeRemoteFilePath);
             }
         }
 
