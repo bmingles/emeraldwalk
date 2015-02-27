@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Linq;
 
 namespace Emeraldwalk.Emeraldwalk_VsFileMirror.Model.Commands
 {
@@ -7,6 +8,8 @@ namespace Emeraldwalk.Emeraldwalk_VsFileMirror.Model.Commands
         [DisplayName(" Cmd")] //small display hack to force order
         public string Cmd { get; set; }
         public string Args { get; set; }
+        public bool IsEnabled { get; set; }
+        public bool RequireUnderRoot { get; set; }
 
         private static int GetSplitIndex(string cmdStr)
         {
@@ -30,27 +33,38 @@ namespace Emeraldwalk.Emeraldwalk_VsFileMirror.Model.Commands
             return i;
         }
 
+        /// <summary>
+        /// Parse a string representation of a cmd
+        /// Format: IsEnabled RequireUnderRoot cmd args
+        /// </summary>
         public static CommandConfig Parse(string cmdStr)
         {
             cmdStr = cmdStr.Trim();
+            string[] split = cmdStr.Split(' ');
+
+            bool isEnabled = bool.Parse(split[0]);
+            bool requireUnderRoot = bool.Parse(split[1]);
+            cmdStr = string.Join(" ", split.Skip(2));
+
+            CommandConfig config = new CommandConfig
+            {
+                IsEnabled = isEnabled,
+                RequireUnderRoot = requireUnderRoot
+            };            
+            
             int splitIndex = GetSplitIndex(cmdStr);
 
             if (splitIndex < cmdStr.Length)
             {
-                return new CommandConfig
-                {
-                    Cmd = cmdStr.Substring(0, splitIndex),
-                    Args = cmdStr.Substring(splitIndex + 1)
-                };
+                config.Cmd = cmdStr.Substring(0, splitIndex);
+                config.Args = cmdStr.Substring(splitIndex + 1);
             }
             else
             {
-                return new CommandConfig
-                {
-                    Cmd = cmdStr,
-                    Args = null
-                };
+                config.Cmd = cmdStr;
             }
+
+            return config;
         }
 
         public override string ToString()

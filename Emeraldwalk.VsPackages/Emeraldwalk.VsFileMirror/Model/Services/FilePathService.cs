@@ -31,7 +31,8 @@ namespace Emeraldwalk.Emeraldwalk_VsFileMirror.Model.Services
         {
             if (!this.IsUnderLocalRoot(localFullFilePath))
             {
-                throw new InvalidOperationException("Local path must be under local root path.");
+                return "[Local path must be under local root path.]";
+                //throw new InvalidOperationException("Local path must be under local root path.");
             }
 
             string relativePath = localFullFilePath.Substring(this.Options.LocalRootPath.Length + 1);

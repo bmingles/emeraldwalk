@@ -1,4 +1,4 @@
-﻿using Emeraldwalk.Emeraldwalk_VsFileMirror.Model;
+﻿/*using Emeraldwalk.Emeraldwalk_VsFileMirror.Model;
 using Emeraldwalk.Emeraldwalk_VsFileMirror.Model.Commands;
 using Emeraldwalk.Emeraldwalk_VsFileMirror.Model.Services;
 using Microsoft.VisualStudio.Shell;
@@ -221,3 +221,4 @@ namespace Emeraldwalk.Emeraldwalk_VsFileMirror.Views
         #endregion
     }
 }
+*/

@@ -1,5 +1,6 @@
 ﻿using Emeraldwalk.Emeraldwalk_VsFileMirror.Model.Commands;
 using Emeraldwalk.Emeraldwalk_VsFileMirror.Views;
+using System;
 
 namespace Emeraldwalk.Emeraldwalk_VsFileMirror.Model.Services
 {
@@ -21,19 +22,45 @@ namespace Emeraldwalk.Emeraldwalk_VsFileMirror.Model.Services
 
         public void RunOnSaveCommands(string fullLocalFilePath)
         {
+            bool isUnderLocalRoot = this.FilePathService.IsUnderLocalRoot(fullLocalFilePath);
+
+            int i = 0;
             foreach(CommandConfig cmdConfig in this.Options.OnSaveCommands)
             {
-                string args = CommandTokenService.ReplaceTokens(
-                    cmdConfig.Args, 
-                    fullLocalFilePath,
-                    this.FilePathService.GetRemoteFilePath(fullLocalFilePath),
-                    this.Options);
+                Console.WriteLine("Command {0}:", ++i);
+                if (cmdConfig.IsEnabled)
+                {
+                    if(cmdConfig.RequireUnderRoot && !isUnderLocalRoot)
+                    {
+                        this.Console.WriteLine("Local path '{0}' is not under local root path '{1}'.",
+                            fullLocalFilePath, 
+                            this.Options.LocalRootPath);
+                        break;
+                    }
 
-                new CommandRunner(
-                    this.Console,
-                    cmdConfig.Cmd,
-                    args,
-                    this.Options.CommandTimeout).Start();
+                    try
+                    {
+                        string args = CommandTokenService.ReplaceTokens(
+                            cmdConfig.Args ?? "",
+                            fullLocalFilePath,
+                            this.FilePathService.GetRemoteFilePath(fullLocalFilePath),
+                            this.Options);
+
+                        new CommandRunner(
+                            this.Console,
+                            cmdConfig.Cmd,
+                            args,
+                            this.Options.CommandTimeout).Start();
+                    }
+                    catch(Exception e)
+                    {
+                        this.Console.WriteLine("{0}\r\n{1}", e.Message, e.StackTrace);
+                    }
+                }
+                else
+                {
+                    this.Console.WriteLine("Disabled command.");
+                }
             }
         }
     }

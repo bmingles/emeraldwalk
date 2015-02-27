@@ -24,7 +24,7 @@ namespace Emeraldwalk.Emeraldwalk_VsFileMirror
     [InstalledProductRegistration("#110", "#112", "1.0", IconResourceID = 400)]
     [Guid(GuidList.guidEmeraldwalk_VsFileMirrorPkgString)]
     [ProvideAutoLoad(UIContextGuids80.SolutionExists)]
-    [ProvideOptionPage(typeof(FileMirrorOptionPage), FileMirrorOptionPage.CATEGORY, FileMirrorOptionPage.PAGE_NAME, 0, 0, true)]
+    [ProvideOptionPage(typeof(FileMirrorOptions), FileMirrorOptions.CATEGORY, FileMirrorOptions.PAGE_NAME, 0, 0, true)]
     public sealed class FileMirrorPackage : Package
     {
         public const string PACKAGE_DESCRIPTION = "Emeraldwalk - File Mirror";
@@ -38,7 +38,7 @@ namespace Emeraldwalk.Emeraldwalk_VsFileMirror
         private IFileMirrorOptions _options;
         private IFileMirrorOptions Options
         {
-            get { return this._options ?? (this._options = (FileMirrorOptionPage)this.GetDialogPage(typeof(FileMirrorOptionPage))); }
+            get { return this._options ?? (this._options = (FileMirrorOptions)this.GetDialogPage(typeof(FileMirrorOptions))); }
         }
 
         public FileMirrorPackage()
@@ -82,12 +82,6 @@ namespace Emeraldwalk.Emeraldwalk_VsFileMirror
             if (!this.Options.IsConfigured)
             {
                 this.Console.WriteLine("{0} not configured.", PACKAGE_DESCRIPTION);
-                return;
-            }
-
-            if(!this.FilePathService.IsUnderLocalRoot(document.FullName))
-            {
-                this.Console.WriteLine("Local path '{0}' is not under local root path '{1}'.", document.FullName, this.Options.LocalRootPath);
                 return;
             }
 
