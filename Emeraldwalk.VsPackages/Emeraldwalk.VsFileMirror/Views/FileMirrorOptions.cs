@@ -1,6 +1,8 @@
 ﻿using Emeraldwalk.Emeraldwalk_VsFileMirror.Model;
 using Emeraldwalk.Emeraldwalk_VsFileMirror.Model.Commands;
+using Emeraldwalk.Emeraldwalk_VsFileMirror.Model.Services;
 using Microsoft.VisualStudio.Shell;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -13,6 +15,7 @@ using System.Threading.Tasks;
 
 namespace Emeraldwalk.Emeraldwalk_VsFileMirror.Views
 {
+    [Serializable]
     [ClassInterface(ClassInterfaceType.AutoDual)]
     [Guid("47573927-FB20-4BC7-979A-E37960F0F6C3")]
     public class FileMirrorOptions : UIElementDialogPage, IFileMirrorOptions, INotifyPropertyChanged
@@ -69,6 +72,11 @@ namespace Emeraldwalk.Emeraldwalk_VsFileMirror.Views
             get { return Path.Combine(this.LocalRootPath, this.MockRelativeLocalFilePath); }
         }
 
+        public string LocalFilePathNoX
+        {
+            get { return CommandTokenService.RemoveExtension(this.LocalFilePath); }
+        }
+
         public string RemoteFilePath
         {
             get
@@ -78,6 +86,11 @@ namespace Emeraldwalk.Emeraldwalk_VsFileMirror.Views
                     this.RemotePathSeparatorCharacter,
                     this.MockRelativeRemoteFilePath);
             }
+        }
+
+        public string RemoteFilePathNoX
+        {
+            get { return CommandTokenService.RemoveExtension(this.RemoteFilePath); }
         }
 
         private string _localRootPath;
@@ -140,7 +153,7 @@ namespace Emeraldwalk.Emeraldwalk_VsFileMirror.Views
         {
             get { return this._commandTimeout ?? 10; }
             set 
-            { 
+            {
                 this._commandTimeout = value;
                 this.OnPropertyChanged("CommandTimeout");
             }
@@ -149,33 +162,51 @@ namespace Emeraldwalk.Emeraldwalk_VsFileMirror.Views
         private IList<CommandConfig> _onSaveCommands;        
         public IList<CommandConfig> OnSaveCommands
         {
-            get { return this._onSaveCommands ?? (this._onSaveCommands = new ObservableCollection<CommandConfig>()); }
+            get 
+            { 
+                if(this._onSaveCommands == null)
+                {
+                    this._onSaveCommands = new ObservableCollection<CommandConfig>();
+                }
+
+                return this._onSaveCommands;
+            }
+        }
+
+        public string SaveCommandsOutput
+        {
+            get 
+            {
+                return string.Join("\r\n", this.OnSaveCommands.Select(cmd =>
+                {
+                    string args = CommandTokenService.ReplaceTokens(
+                        cmd.Args ?? "",
+                        this.LocalFilePath,
+                        this.RemoteFilePath,
+                        this);
+
+                    return string.Format("{0} {1}", cmd.Cmd, args);
+                })); 
+            }
         }
 
         /// <summary>
-        /// Poor man's persistence mechanism since string values will be auto-persisted.
+        /// Taking advantage of auto-persistence of string properties.
         /// </summary>
-        public string OnSaveCommandsEditor
+        public string PersistOnSaveCommands
         {
-            get
-            {
-                return string.Join("\r\n", this.OnSaveCommands.Select(cmd => string.Format("{0} {1} {2} {3}", cmd.IsEnabled, cmd.RequireUnderRoot, cmd.Cmd, cmd.Args)));
-            }
+            get { return JsonConvert.SerializeObject(this.OnSaveCommands); }
             set
             {
                 this.OnSaveCommands.Clear();
-                foreach (string cmd in value.Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries))
+                foreach(CommandConfig commandConfig in JsonConvert.DeserializeObject<IList<CommandConfig>>(value))
                 {
-                    try
-                    {
-                        this.OnSaveCommands.Add(CommandConfig.Parse(cmd));
-                    }
-                    catch{}
+                    this.OnSaveCommands.Add(commandConfig);
                 }
             }
         }
 
-        private void OnPropertyChanged(string propertyName)
+        public void OnPropertyChanged(string propertyName)
         {
             if (this.PropertyChanged != null)
             {

@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="400" d:DesignWidth="300">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
@@ -22,7 +22,10 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <Label Grid.Row="0" 
@@ -46,49 +49,65 @@
                  IsEnabled="False"
                  Text="{Binding LocalFilePath, Mode=OneWay}"
                  />
-        <Label Grid.Row="4">{LOCAL__ROOT}</Label>
+        <Label Grid.Row="4">{LOCAL__FILE__NOX}</Label>
         <TextBox Grid.Row="4" 
+                 Grid.Column="1"
+                 IsReadOnly="True"
+                 IsEnabled="False"
+                 Text="{Binding LocalFilePathNoX, Mode=OneWay}"
+                 />
+        <Label Grid.Row="5">{LOCAL__ROOT}</Label>
+        <TextBox Grid.Row="5" 
                  Grid.Column="1" 
                  Text="{Binding LocalRootPath}"
                  />
         
-        <Label Grid.Row="5" 
+        <Label Grid.Row="6" 
                FontWeight="Bold" 
                HorizontalAlignment="Center"
                Grid.ColumnSpan="2">Remote Server</Label>
-        <Label Grid.Row="6">{REMOTE__HOST}</Label>
-        <TextBox Grid.Row="6" 
+        <Label Grid.Row="7">{REMOTE__HOST}</Label>
+        <TextBox Grid.Row="7" 
                  Grid.Column="1" 
                  Text="{Binding RemoteHost}"
                  />
-        <Label Grid.Row="7">{REMOTE__USER}</Label>
-        <TextBox Grid.Row="7" 
-                 Grid.Column="1" 
-                 Text="{Binding RemoteUsername}"
-                 />
-        <Label Grid.Row="8">{REMOTE__ROOT}</Label>
+        <Label Grid.Row="8">{REMOTE__USER}</Label>
         <TextBox Grid.Row="8" 
                  Grid.Column="1" 
-                 Text="{Binding RemoteRootPath}"
+                 Text="{Binding RemoteUsername}"
                  />
         <Label Grid.Row="9">Remote Path Separator</Label>
         <TextBox Grid.Row="9" 
                  Grid.Column="1" 
                  Text="{Binding RemotePathSeparatorCharacter}"
                  />
-        <Label Grid.Row="10">{REMOTE__FILE}</Label>
+        <Label Grid.Row="10">{REMOTE__ROOT}</Label>
         <TextBox Grid.Row="10" 
+                 Grid.Column="1" 
+                 Text="{Binding RemoteRootPath}"
+                 />
+        <Label Grid.Row="11">{REMOTE__FILE}</Label>
+        <TextBox Grid.Row="11" 
                  Grid.Column="1" 
                  IsReadOnly="True"
                  IsEnabled="False"
                  Text="{Binding RemoteFilePath, Mode=OneWay}"
                  />
+        <Label Grid.Row="12">{REMOTE__FILE__NOX}</Label>
+        <TextBox Grid.Row="12" 
+                 Grid.Column="1" 
+                 IsReadOnly="True"
+                 IsEnabled="False"
+                 Text="{Binding RemoteFilePathNoX, Mode=OneWay}"
+                 />
         
-        <DataGrid Grid.Row="11"
+        <DataGrid x:Name="SaveCommandsGrid"
+                  Grid.Row="13"
                   Grid.ColumnSpan="2"
                   CanUserAddRows="True"
                   AutoGenerateColumns="False"
                   KeyboardNavigation.TabNavigation="Cycle"
+                  CellEditEnding="DataGrid_CellEditEnding"
                   ItemsSource="{Binding OnSaveCommands}"
                   >
             <DataGrid.Columns>
@@ -98,6 +117,9 @@
                 <DataGridCheckBoxColumn Header="Require Root"
                                         Binding="{Binding RequireUnderRoot}"
                                         />
+                <DataGridTextColumn Header="Filter"
+                                    Binding="{Binding Filter}"
+                                    />
                 <DataGridTextColumn Header="Cmd" 
                                     Binding="{Binding Cmd}"
                                     MinWidth="75"
@@ -108,5 +130,10 @@
                                     />
             </DataGrid.Columns>
         </DataGrid>
+
+        <TextBlock Grid.Row="14"
+                   Grid.ColumnSpan="2"
+                   PreviewMouseDown="TextBlock_PreviewMouseDown"
+                   Text="{Binding SaveCommandsOutput}"/>
     </Grid>
 </UserControl>

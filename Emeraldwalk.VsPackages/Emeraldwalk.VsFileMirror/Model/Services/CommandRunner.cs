@@ -2,6 +2,7 @@
 using Emeraldwalk.Emeraldwalk_VsFileMirror.Views;
 using System;
 using System.Diagnostics;
+using System.Threading;
 
 namespace Emeraldwalk.Emeraldwalk_VsFileMirror.Model.Services
 {
@@ -10,6 +11,7 @@ namespace Emeraldwalk.Emeraldwalk_VsFileMirror.Model.Services
         private Process Process { get; set; }
         private IConsole Console { get; set; }
         private int TimeoutSeconds { get; set; }
+        private CountdownEvent CountdownEvent { get; set; }
 
         public CommandRunner(
             IConsole console,
@@ -22,9 +24,20 @@ namespace Emeraldwalk.Emeraldwalk_VsFileMirror.Model.Services
             this.TimeoutSeconds = timeoutSeconds;
         }
 
+        private void HandleData(object sender, DataReceivedEventArgs e)
+        {
+            if (e.Data == null)
+            {
+                this.CountdownEvent.Signal(); //decrement countdown
+            }
+            else if (!string.IsNullOrWhiteSpace(e.Data))
+            {
+                this.Console.WriteLine(e.Data);
+            }
+        }
+
         private void InitializeProcess(
             string exePath,
-            //string workingDir,
             string exeArgs)
         {
             Process process = new Process
@@ -32,7 +45,6 @@ namespace Emeraldwalk.Emeraldwalk_VsFileMirror.Model.Services
                 EnableRaisingEvents = true,
                 StartInfo = new ProcessStartInfo(exePath)
                 {
-                    //WorkingDirectory = workingDir,
                     Arguments = exeArgs,
                     CreateNoWindow = true,
                     UseShellExecute = false,
@@ -42,25 +54,12 @@ namespace Emeraldwalk.Emeraldwalk_VsFileMirror.Model.Services
                 }
             };
 
+            process.OutputDataReceived += this.HandleData;
+            process.ErrorDataReceived += this.HandleData;
+
             process.Exited += (object sender, EventArgs e) =>
             {
                 this.Console.WriteLine("'{0}' exited with code {1}", exePath, process.ExitCode);
-            };
-
-            process.OutputDataReceived += (object sender, DataReceivedEventArgs e) =>
-            {
-                if (!string.IsNullOrWhiteSpace(e.Data))
-                {
-                    this.Console.WriteLine(e.Data);
-                }
-            };
-
-            process.ErrorDataReceived += (object sender, DataReceivedEventArgs e) =>
-            {
-                if (!string.IsNullOrWhiteSpace(e.Data))
-                {
-                    this.Console.WriteLine(e.Data);
-                }
             };
 
             this.Process = process;
@@ -68,6 +67,8 @@ namespace Emeraldwalk.Emeraldwalk_VsFileMirror.Model.Services
 
         public void Start()
         {
+            this.CountdownEvent = new CountdownEvent(2); //Count standard and error output completion
+
             this.Console.WriteLine("{0} {1}", this.Process.StartInfo.FileName, this.Process.StartInfo.Arguments);
             this.Process.Start();
             this.Process.BeginOutputReadLine();
@@ -76,6 +77,7 @@ namespace Emeraldwalk.Emeraldwalk_VsFileMirror.Model.Services
             if (!this.Process.WaitForExit(this.TimeoutSeconds * 1000))
             {
                 this.Process.Kill();
+                this.CountdownEvent.Wait();
             }
         }
 

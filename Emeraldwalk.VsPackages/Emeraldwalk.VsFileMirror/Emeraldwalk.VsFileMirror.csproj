@@ -56,6 +56,7 @@
     <Reference Include="Microsoft.VisualStudio.Shell.Immutable.10.0" />
     <Reference Include="Microsoft.VisualStudio.Shell.Immutable.11.0" />
     <Reference Include="Microsoft.VisualStudio.Shell.Immutable.12.0" />
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
@@ -142,7 +143,6 @@
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="FileMirrorPackage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Views\FileMirrorOptionPage.cs" />
     <Compile Include="Views\FileMirrorOptions.cs">
       <SubType>Component</SubType>
     </Compile>

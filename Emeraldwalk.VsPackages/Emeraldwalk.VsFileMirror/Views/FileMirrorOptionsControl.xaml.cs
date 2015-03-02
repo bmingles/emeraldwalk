@@ -61,10 +61,15 @@ namespace Emeraldwalk.Emeraldwalk_VsFileMirror.Views
         /// </summary>
         private void FileMirrorOptionsControl_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
         {
-            foreach(TextBox textBox in this.GetChildren<TextBox>(this))
+            UpdateTextBoxes();
+        }
+
+        private void UpdateTextBoxes()
+        {
+            foreach (TextBox textBox in this.GetChildren<TextBox>(this))
             {
                 BindingExpression bindingExpression = textBox.GetBindingExpression(TextBox.TextProperty);
-                if(bindingExpression != null)
+                if (bindingExpression != null)
                 {
                     bindingExpression.UpdateSource();
                 }
@@ -87,6 +92,17 @@ namespace Emeraldwalk.Emeraldwalk_VsFileMirror.Views
                     yield return grandChild;
                 }
             }
+        }
+
+        private void DataGrid_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
+        {
+            this.FileMirrorOptions.OnPropertyChanged("SaveCommandsOutput");
+        }
+
+        private void TextBlock_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            this.UpdateTextBoxes();
+            this.SaveCommandsGrid.CommitEdit();
         }
     }
 }
