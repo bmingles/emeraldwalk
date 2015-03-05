@@ -1,6 +1,7 @@
 ﻿using Emeraldwalk.Emeraldwalk_VsFileMirror.Model.Commands;
 using Emeraldwalk.Emeraldwalk_VsFileMirror.Views;
 using System;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace Emeraldwalk.Emeraldwalk_VsFileMirror.Model.Services
@@ -28,7 +29,7 @@ namespace Emeraldwalk.Emeraldwalk_VsFileMirror.Model.Services
             bool isUnderLocalRoot = this.FilePathService.IsUnderLocalRoot(fullLocalFilePath);
 
             int i = 0;
-            foreach(CommandConfig cmdConfig in this.Options.OnSaveCommands)
+            foreach(CommandConfig cmdConfig in this.Options.OnSaveCommands.OrderBy(cmd => cmd.Priority))
             {
                 Console.Write("{0}Cmd {1}: ", i == 0 ? "" : "\r\n", ++i);
                 if (cmdConfig.IsEnabled)

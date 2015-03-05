@@ -199,7 +199,7 @@ namespace Emeraldwalk.Emeraldwalk_VsFileMirror.Views
             set
             {
                 this.OnSaveCommands.Clear();
-                foreach(CommandConfig commandConfig in JsonConvert.DeserializeObject<IList<CommandConfig>>(value))
+                foreach(CommandConfig commandConfig in JsonConvert.DeserializeObject<IList<CommandConfig>>(value).OrderBy(cmd => cmd.Priority))
                 {
                     this.OnSaveCommands.Add(commandConfig);
                 }

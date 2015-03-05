@@ -117,6 +117,9 @@
                 </Style>
             </DataGrid.CellStyle>
             <DataGrid.Columns>
+                <DataGridTextColumn Header="Priority"
+                                    Binding="{Binding Priority}"
+                                    />
                 <DataGridCheckBoxColumn Header="Enabled" 
                                         Binding="{Binding IsEnabled}"
                                         />
