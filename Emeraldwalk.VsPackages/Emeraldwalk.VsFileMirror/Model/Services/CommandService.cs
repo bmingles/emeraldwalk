@@ -23,12 +23,14 @@ namespace Emeraldwalk.Emeraldwalk_VsFileMirror.Model.Services
 
         public void RunOnSaveCommands(string fullLocalFilePath)
         {
+            Console.WriteLine("\r\n----------------------------------------------------------------------");
+
             bool isUnderLocalRoot = this.FilePathService.IsUnderLocalRoot(fullLocalFilePath);
 
             int i = 0;
             foreach(CommandConfig cmdConfig in this.Options.OnSaveCommands)
             {
-                Console.WriteLine("\r\nCommand {0}:", ++i);
+                Console.Write("{0}Cmd {1}: ", i == 0 ? "" : "\r\n", ++i);
                 if (cmdConfig.IsEnabled)
                 {
                     if(cmdConfig.RequireUnderRoot && !isUnderLocalRoot)
@@ -46,11 +48,11 @@ namespace Emeraldwalk.Emeraldwalk_VsFileMirror.Model.Services
                         {
                             if(Regex.IsMatch(fullLocalFilePath, cmdConfig.Filter))
                             {
-                                this.Console.WriteLine("Filter match '{0}'", cmdConfig.Filter);
+                                this.Console.WriteLine("Match '{0}'", cmdConfig.Filter);
                             }
                             else
                             {
-                                this.Console.WriteLine("Filter skip '{0}'", cmdConfig.Filter);
+                                this.Console.WriteLine("Skip '{0}'", cmdConfig.Filter);
                                 continue; //move on to next cmd
                             }
                         }

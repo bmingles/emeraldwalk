@@ -60,6 +60,7 @@ namespace Emeraldwalk.Emeraldwalk_VsFileMirror.Model.Services
             process.Exited += (object sender, EventArgs e) =>
             {
                 this.Console.WriteLine("'{0}' exited with code {1}", exePath, process.ExitCode);
+                this.CountdownEvent.Signal(); //decrement countdown
             };
 
             this.Process = process;
@@ -67,7 +68,7 @@ namespace Emeraldwalk.Emeraldwalk_VsFileMirror.Model.Services
 
         public void Start()
         {
-            this.CountdownEvent = new CountdownEvent(2); //Count standard and error output completion
+            this.CountdownEvent = new CountdownEvent(3); //Count standard and error output and exited event completion
 
             this.Console.WriteLine("{0} {1}", this.Process.StartInfo.FileName, this.Process.StartInfo.Arguments);
             this.Process.Start();
@@ -76,7 +77,7 @@ namespace Emeraldwalk.Emeraldwalk_VsFileMirror.Model.Services
 
             if (!this.Process.WaitForExit(this.TimeoutSeconds * 1000))
             {
-                this.Process.Kill();
+                this.Process.Kill();                
                 this.CountdownEvent.Wait();
             }
         }
