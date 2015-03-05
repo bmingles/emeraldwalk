@@ -110,6 +110,12 @@
                   CellEditEnding="DataGrid_CellEditEnding"
                   ItemsSource="{Binding OnSaveCommands}"
                   >
+            <DataGrid.CellStyle>
+                <Style TargetType="{x:Type DataGridCell}">
+                    <EventSetter Event="PreviewMouseDown"
+                                 Handler="DataGridCell_PreviewMouseDown"/>
+                </Style>
+            </DataGrid.CellStyle>
             <DataGrid.Columns>
                 <DataGridCheckBoxColumn Header="Enabled" 
                                         Binding="{Binding IsEnabled}"

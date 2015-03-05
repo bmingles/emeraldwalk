@@ -61,19 +61,48 @@ namespace Emeraldwalk.Emeraldwalk_VsFileMirror.Views
         /// </summary>
         private void FileMirrorOptionsControl_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
         {
-            UpdateTextBoxes();
+            UpdateSources();
         }
 
-        private void UpdateTextBoxes()
+        /// <summary>
+        /// Handle the fact that last edited control may not have updated its source when save button is clicked
+        /// due to still having focus.
+        /// </summary>
+        private void UpdateSources()
         {
-            foreach (TextBox textBox in this.GetChildren<TextBox>(this))
+            foreach (Control control in this.GetChildren<Control>(this))
             {
-                BindingExpression bindingExpression = textBox.GetBindingExpression(TextBox.TextProperty);
+                BindingExpression bindingExpression = null;
+                if(control is TextBox)
+                {
+                    bindingExpression = control.GetBindingExpression(TextBox.TextProperty);
+                }
+                else if(control is CheckBox)
+                {
+                    bindingExpression = control.GetBindingExpression(CheckBox.IsCheckedProperty);
+                }
+
                 if (bindingExpression != null)
                 {
                     bindingExpression.UpdateSource();
                 }
             }
+        }
+
+        private T GetParent<T>(DependencyObject dependencyObject)
+            where T : DependencyObject
+        {
+            DependencyObject parent = VisualTreeHelper.GetParent(dependencyObject) as DependencyObject;
+            while(parent != null)
+            {
+                if(parent is T)
+                {
+                    return (T)parent;
+                }
+                parent = VisualTreeHelper.GetParent(parent) as DependencyObject;
+            }
+
+            return null;
         }
 
         private IEnumerable<T> GetChildren<T>(DependencyObject dependencyObject)
@@ -99,9 +128,33 @@ namespace Emeraldwalk.Emeraldwalk_VsFileMirror.Views
             this.FileMirrorOptions.OnPropertyChanged("SaveCommandsOutput");
         }
 
+        private void DataGridCell_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            DataGridCell cell = sender as DataGridCell;
+            if(!cell.IsEditing && !cell.IsReadOnly)
+            {
+                cell.Focus();
+                if(this.SaveCommandsGrid.SelectionUnit == DataGridSelectionUnit.FullRow)
+                {
+                    DataGridRow row = this.GetParent<DataGridRow>(cell);
+                    if(!row.IsSelected)
+                    {
+                        row.IsSelected = true;
+                    }
+                }
+                else
+                {
+                    if(!cell.IsSelected)
+                    {
+                        cell.IsSelected = true;
+                    }
+                }
+            }
+        }
+
         private void TextBlock_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            this.UpdateTextBoxes();
+            this.UpdateSources();
             this.SaveCommandsGrid.CommitEdit();
         }
     }
