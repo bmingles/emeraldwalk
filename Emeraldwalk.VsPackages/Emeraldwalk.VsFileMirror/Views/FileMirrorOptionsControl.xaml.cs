@@ -1,6 +1,8 @@
 ﻿using Emeraldwalk.Emeraldwalk_VsFileMirror.Model;
+using Emeraldwalk.Emeraldwalk_VsFileMirror.Model.Commands;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -156,6 +158,26 @@ namespace Emeraldwalk.Emeraldwalk_VsFileMirror.Views
         {
             this.UpdateSources();
             this.SaveCommandsGrid.CommitEdit();
+        }
+
+        private void SaveCommandsGrid_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
+        {
+            if(e.Row.IsNewItem)
+            {
+                return;
+            }
+
+            CommandConfig cmd = e.Row.Item as CommandConfig;
+            if(!cmd.ShouldSave)
+            {
+                e.Cancel = true;
+                int rowIndex = e.Row.GetIndex();
+                ObservableCollection<CommandConfig> commands = this.SaveCommandsGrid.ItemsSource as ObservableCollection<CommandConfig>;
+                if (commands != null)
+                {
+                    commands.RemoveAt(rowIndex);
+                }
+            }
         }
     }
 }

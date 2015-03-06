@@ -25,39 +25,32 @@ namespace Emeraldwalk.Emeraldwalk_VsFileMirror.Model.Services
         public void RunOnSaveCommands(string fullLocalFilePath)
         {
             Console.WriteLine("\r\n----------------------------------------------------------------------");
+            Console.WriteLine(fullLocalFilePath);
 
             bool isUnderLocalRoot = this.FilePathService.IsUnderLocalRoot(fullLocalFilePath);
 
             int i = 0;
             foreach(CommandConfig cmdConfig in this.Options.OnSaveCommands.OrderBy(cmd => cmd.Priority))
             {
-                Console.Write("{0}Cmd {1}: ", i == 0 ? "" : "\r\n", ++i);
+                ++i;                
                 if (cmdConfig.IsEnabled)
                 {
+                    //not under local root
                     if(cmdConfig.RequireUnderRoot && !isUnderLocalRoot)
                     {
-                        this.Console.WriteLine("Local path '{0}' is not under local root path '{1}'.",
-                            fullLocalFilePath, 
-                            this.Options.LocalRootPath);
-
-                        continue; //move on to next cmd
+                        continue;
                     }
+
+                    //filter mismatch
+                    if (!string.IsNullOrWhiteSpace(cmdConfig.Filter) && !Regex.IsMatch(fullLocalFilePath, cmdConfig.Filter))
+                    {
+                        continue;
+                    }
+
+                    Console.Write("{0}{1}: ", i == 0 ? "" : "\r\n", i);
 
                     try
                     {
-                        if(!string.IsNullOrWhiteSpace(cmdConfig.Filter))
-                        {
-                            if(Regex.IsMatch(fullLocalFilePath, cmdConfig.Filter))
-                            {
-                                this.Console.WriteLine("Match '{0}'", cmdConfig.Filter);
-                            }
-                            else
-                            {
-                                this.Console.WriteLine("Skip '{0}'", cmdConfig.Filter);
-                                continue; //move on to next cmd
-                            }
-                        }
-
                         string args = CommandTokenService.ReplaceTokens(
                             cmdConfig.Args ?? "",
                             fullLocalFilePath,
@@ -74,10 +67,6 @@ namespace Emeraldwalk.Emeraldwalk_VsFileMirror.Model.Services
                     {
                         this.Console.WriteLine("{0}\r\n{1}", e.Message, e.StackTrace);
                     }
-                }
-                else
-                {
-                    this.Console.WriteLine("Disabled command.");
                 }
             }
         }

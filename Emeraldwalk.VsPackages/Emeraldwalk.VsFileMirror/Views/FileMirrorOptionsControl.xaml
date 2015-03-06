@@ -106,10 +106,18 @@
                   Grid.ColumnSpan="2"
                   CanUserAddRows="True"
                   AutoGenerateColumns="False"
+                  CanUserDeleteRows="True"
+                  CanUserResizeRows="False"
                   KeyboardNavigation.TabNavigation="Cycle"
                   CellEditEnding="DataGrid_CellEditEnding"
+                  RowEditEnding="SaveCommandsGrid_RowEditEnding"
                   ItemsSource="{Binding OnSaveCommands}"
                   >
+            <DataGrid.RowHeaderStyle>
+                <Style TargetType="{x:Type DataGridRowHeader}">
+                    <Setter Property="Width" Value="25"/>
+                </Style>
+            </DataGrid.RowHeaderStyle>
             <DataGrid.CellStyle>
                 <Style TargetType="{x:Type DataGridCell}">
                     <EventSetter Event="PreviewMouseDown"
