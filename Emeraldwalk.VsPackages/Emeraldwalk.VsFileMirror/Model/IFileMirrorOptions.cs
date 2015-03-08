@@ -15,6 +15,7 @@ namespace Emeraldwalk.Emeraldwalk_VsFileMirror.Model
 
         int CommandTimeout { get; set; }
         IList<CommandConfig> OnSaveCommands { get; }
+        string PersistOnSaveCommands { get; set; }
 
         void OnPropertyChanged(string propertyName);
     }

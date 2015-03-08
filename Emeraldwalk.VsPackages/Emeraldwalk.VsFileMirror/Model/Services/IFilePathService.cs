@@ -5,5 +5,6 @@ namespace Emeraldwalk.Emeraldwalk_VsFileMirror.Model.Services
     {
         string GetRemoteFilePath(string localFullFilePath);
         bool IsUnderLocalRoot(string localFullFilePath);
+        string FixFilePathCasing(string filePath);
     }
 }

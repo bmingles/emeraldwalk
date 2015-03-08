@@ -77,6 +77,11 @@ namespace Emeraldwalk.Emeraldwalk_VsFileMirror.Views
             get { return CommandTokenService.RemoveExtension(this.LocalFilePath); }
         }
 
+        public string LocalFileDir
+        {
+            get { return CommandTokenService.GetDirectoryPath(this.LocalFilePath, '\\'); }
+        }
+
         public string RemoteFilePath
         {
             get
@@ -91,6 +96,11 @@ namespace Emeraldwalk.Emeraldwalk_VsFileMirror.Views
         public string RemoteFilePathNoX
         {
             get { return CommandTokenService.RemoveExtension(this.RemoteFilePath); }
+        }
+
+        public string RemoteFileDir
+        {
+            get { return CommandTokenService.GetDirectoryPath(this.RemoteFilePath, this.RemotePathSeparatorCharacter); }
         }
 
         private string _localRootPath;
@@ -195,7 +205,7 @@ namespace Emeraldwalk.Emeraldwalk_VsFileMirror.Views
         /// </summary>
         public string PersistOnSaveCommands
         {
-            get { return JsonConvert.SerializeObject(this.OnSaveCommands); }
+            get { return JsonConvert.SerializeObject(this.OnSaveCommands.Where(cmd => cmd.ShouldSave).ToList()); }
             set
             {
                 this.OnSaveCommands.Clear();

@@ -24,6 +24,9 @@ namespace Emeraldwalk.Emeraldwalk_VsFileMirror.Model.Services
 
         public void RunOnSaveCommands(string fullLocalFilePath)
         {
+            //ensure casing is correct for case sensitive commands
+            fullLocalFilePath = this.FilePathService.FixFilePathCasing(fullLocalFilePath);
+
             Console.WriteLine("\r\n----------------------------------------------------------------------");
             Console.WriteLine(fullLocalFilePath);
 

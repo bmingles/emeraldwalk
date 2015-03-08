@@ -1,8 +1,11 @@
 ﻿using Emeraldwalk.Emeraldwalk_VsFileMirror.Model;
 using Emeraldwalk.Emeraldwalk_VsFileMirror.Model.Commands;
+using Microsoft.Win32;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -177,6 +180,29 @@ namespace Emeraldwalk.Emeraldwalk_VsFileMirror.Views
                 {
                     commands.RemoveAt(rowIndex);
                 }
+            }
+        }
+
+        private void ImportCmd_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.Filter = "Save Commands|*.json";
+            if(ofd.ShowDialog() == true)
+            {
+                this.FileMirrorOptions.PersistOnSaveCommands = File.ReadAllText(ofd.FileName);
+            }
+        }
+
+        private void ExportCmd_Click(object sender, RoutedEventArgs e)
+        {
+            SaveFileDialog sfd = new SaveFileDialog();
+            sfd.Filter = "Save Commands|*.json";
+            if(sfd.ShowDialog() == true)
+            {
+                string json = this.FileMirrorOptions.PersistOnSaveCommands;
+                IList<CommandConfig> commands = JsonConvert.DeserializeObject<IList<CommandConfig>>(json);
+                json = JsonConvert.SerializeObject(commands, Formatting.Indented);
+                File.WriteAllText(sfd.FileName, json);
             }
         }
     }

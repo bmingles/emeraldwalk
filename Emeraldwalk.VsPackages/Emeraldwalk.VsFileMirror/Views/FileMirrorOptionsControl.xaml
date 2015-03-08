@@ -3,154 +3,198 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             mc:Ignorable="d" 
+             mc:Ignorable="d"
              d:DesignHeight="400" d:DesignWidth="300">
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-
-        <Label Grid.Row="0" 
-               FontWeight="Bold" 
-               HorizontalAlignment="Center"
-               Grid.ColumnSpan="2">Command Settings</Label>
-        <Label Grid.Row="1">Command Timeout (Seconds)</Label>
-        <TextBox Grid.Row="1" 
-                 Grid.Column="1" 
-                 Text="{Binding CommandTimeout}"
-                 />
-
-        <Label Grid.Row="2" 
-               FontWeight="Bold" 
-               HorizontalAlignment="Center"
-               Grid.ColumnSpan="2">Local Config</Label>
-        <Label Grid.Row="3">{LOCAL__FILE}</Label>
-        <TextBox Grid.Row="3" 
-                 Grid.Column="1"
-                 IsReadOnly="True"
-                 IsEnabled="False"
-                 Text="{Binding LocalFilePath, Mode=OneWay}"
-                 />
-        <Label Grid.Row="4">{LOCAL__FILE__NOX}</Label>
-        <TextBox Grid.Row="4" 
-                 Grid.Column="1"
-                 IsReadOnly="True"
-                 IsEnabled="False"
-                 Text="{Binding LocalFilePathNoX, Mode=OneWay}"
-                 />
-        <Label Grid.Row="5">{LOCAL__ROOT}</Label>
-        <TextBox Grid.Row="5" 
-                 Grid.Column="1" 
-                 Text="{Binding LocalRootPath}"
-                 />
         
-        <Label Grid.Row="6" 
-               FontWeight="Bold" 
-               HorizontalAlignment="Center"
-               Grid.ColumnSpan="2">Remote Server</Label>
-        <Label Grid.Row="7">{REMOTE__HOST}</Label>
-        <TextBox Grid.Row="7" 
-                 Grid.Column="1" 
-                 Text="{Binding RemoteHost}"
-                 />
-        <Label Grid.Row="8">{REMOTE__USER}</Label>
-        <TextBox Grid.Row="8" 
-                 Grid.Column="1" 
-                 Text="{Binding RemoteUsername}"
-                 />
-        <Label Grid.Row="9">Remote Path Separator</Label>
-        <TextBox Grid.Row="9" 
-                 Grid.Column="1" 
-                 Text="{Binding RemotePathSeparatorCharacter}"
-                 />
-        <Label Grid.Row="10">{REMOTE__ROOT}</Label>
-        <TextBox Grid.Row="10" 
-                 Grid.Column="1" 
-                 Text="{Binding RemoteRootPath}"
-                 />
-        <Label Grid.Row="11">{REMOTE__FILE}</Label>
-        <TextBox Grid.Row="11" 
-                 Grid.Column="1" 
-                 IsReadOnly="True"
-                 IsEnabled="False"
-                 Text="{Binding RemoteFilePath, Mode=OneWay}"
-                 />
-        <Label Grid.Row="12">{REMOTE__FILE__NOX}</Label>
-        <TextBox Grid.Row="12" 
-                 Grid.Column="1" 
-                 IsReadOnly="True"
-                 IsEnabled="False"
-                 Text="{Binding RemoteFilePathNoX, Mode=OneWay}"
-                 />
-        
-        <DataGrid x:Name="SaveCommandsGrid"
-                  Grid.Row="13"
-                  Grid.ColumnSpan="2"
-                  CanUserAddRows="True"
-                  AutoGenerateColumns="False"
-                  CanUserDeleteRows="True"
-                  CanUserResizeRows="False"
-                  KeyboardNavigation.TabNavigation="Cycle"
-                  CellEditEnding="DataGrid_CellEditEnding"
-                  RowEditEnding="SaveCommandsGrid_RowEditEnding"
-                  ItemsSource="{Binding OnSaveCommands}"
-                  >
-            <DataGrid.RowHeaderStyle>
-                <Style TargetType="{x:Type DataGridRowHeader}">
-                    <Setter Property="Width" Value="25"/>
-                </Style>
-            </DataGrid.RowHeaderStyle>
-            <DataGrid.CellStyle>
-                <Style TargetType="{x:Type DataGridCell}">
-                    <EventSetter Event="PreviewMouseDown"
-                                 Handler="DataGridCell_PreviewMouseDown"/>
-                </Style>
-            </DataGrid.CellStyle>
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Priority"
-                                    Binding="{Binding Priority}"
-                                    />
-                <DataGridCheckBoxColumn Header="Enabled" 
-                                        Binding="{Binding IsEnabled}"
-                                        />
-                <DataGridCheckBoxColumn Header="Require Root"
-                                        Binding="{Binding RequireUnderRoot}"
-                                        />
-                <DataGridTextColumn Header="Filter"
-                                    Binding="{Binding Filter}"
-                                    />
-                <DataGridTextColumn Header="Cmd" 
-                                    Binding="{Binding Cmd}"
-                                    MinWidth="75"
-                                    />
-                <DataGridTextColumn Header="Args" 
-                                    Binding="{Binding Args}"
-                                    Width="100*"
-                                    />
-            </DataGrid.Columns>
-        </DataGrid>
+        <ScrollViewer Grid.Row="0"
+                      VerticalScrollBarVisibility="Visible"
+                      HorizontalContentAlignment="Stretch"
+                      VerticalContentAlignment="Stretch">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
 
-        <TextBlock Grid.Row="14"
-                   Grid.ColumnSpan="2"
-                   PreviewMouseDown="TextBlock_PreviewMouseDown"
-                   Text="{Binding SaveCommandsOutput}"/>
+                <Label Grid.Row="0" 
+                       FontWeight="Bold" 
+                       HorizontalAlignment="Center"
+                       Grid.ColumnSpan="2">Command Settings</Label>
+                <Label Grid.Row="1">Command Timeout (Seconds)</Label>
+                <TextBox Grid.Row="1" 
+                         Grid.Column="1" 
+                         Text="{Binding CommandTimeout}"
+                         />
+
+                <Label Grid.Row="2" 
+                       FontWeight="Bold" 
+                       HorizontalAlignment="Center"
+                       Grid.ColumnSpan="2">Local Config</Label>
+                <Label Grid.Row="3">{LOCAL__FILE}</Label>
+                <TextBox Grid.Row="3" 
+                         Grid.Column="1"
+                         IsReadOnly="True"
+                         IsEnabled="False"
+                         Text="{Binding LocalFilePath, Mode=OneWay}"
+                         />
+                <Label Grid.Row="4">{LOCAL__FILE__NOX}</Label>
+                <TextBox Grid.Row="4" 
+                         Grid.Column="1"
+                         IsReadOnly="True"
+                         IsEnabled="False"
+                         Text="{Binding LocalFilePathNoX, Mode=OneWay}"
+                         />
+                <Label Grid.Row="5">{LOCAL__FILE__DIR}</Label>
+                <TextBox Grid.Row="5" 
+                         Grid.Column="1"
+                         IsReadOnly="True"
+                         IsEnabled="False"
+                         Text="{Binding LocalFileDir, Mode=OneWay}"
+                         />
+                <Label Grid.Row="6">{LOCAL__ROOT}</Label>
+                <TextBox Grid.Row="6" 
+                         Grid.Column="1" 
+                         Text="{Binding LocalRootPath}"
+                         />
+        
+                <Label Grid.Row="7" 
+                       FontWeight="Bold" 
+                       HorizontalAlignment="Center"
+                       Grid.ColumnSpan="2">Remote Server</Label>
+                <Label Grid.Row="8">{REMOTE__HOST}</Label>
+                <TextBox Grid.Row="8" 
+                         Grid.Column="1" 
+                         Text="{Binding RemoteHost}"
+                         />
+                <Label Grid.Row="9">{REMOTE__USER}</Label>
+                <TextBox Grid.Row="9" 
+                         Grid.Column="1" 
+                         Text="{Binding RemoteUsername}"
+                         />
+                <Label Grid.Row="10">Remote Path Separator</Label>
+                <TextBox Grid.Row="10" 
+                         Grid.Column="1" 
+                         Text="{Binding RemotePathSeparatorCharacter}"
+                         />
+                <Label Grid.Row="11">{REMOTE__ROOT}</Label>
+                <TextBox Grid.Row="11" 
+                         Grid.Column="1" 
+                         Text="{Binding RemoteRootPath}"
+                         />
+                <Label Grid.Row="12">{REMOTE__FILE}</Label>
+                <TextBox Grid.Row="12" 
+                         Grid.Column="1" 
+                         IsReadOnly="True"
+                         IsEnabled="False"
+                         Text="{Binding RemoteFilePath, Mode=OneWay}"
+                         />
+                <Label Grid.Row="13">{REMOTE__FILE__NOX}</Label>
+                <TextBox Grid.Row="13" 
+                         Grid.Column="1" 
+                         IsReadOnly="True"
+                         IsEnabled="False"
+                         Text="{Binding RemoteFilePathNoX, Mode=OneWay}"
+                         />
+                <Label Grid.Row="14">{REMOTE__FILE__DIR}</Label>
+                <TextBox Grid.Row="14" 
+                         Grid.Column="1" 
+                         IsReadOnly="True"
+                         IsEnabled="False"
+                         Text="{Binding RemoteFileDir, Mode=OneWay}"
+                         />
+            
+                <!--Save commands-->
+                <DataGrid x:Name="SaveCommandsGrid"
+                          Grid.Row="15"
+                          Grid.ColumnSpan="2"
+                          CanUserAddRows="True"
+                          AutoGenerateColumns="False"
+                          CanUserDeleteRows="True"
+                          CanUserResizeRows="False"
+                          KeyboardNavigation.TabNavigation="Cycle"
+                          CellEditEnding="DataGrid_CellEditEnding"
+                          RowEditEnding="SaveCommandsGrid_RowEditEnding"
+                          ItemsSource="{Binding OnSaveCommands}"
+                          >
+                    <DataGrid.RowHeaderStyle>
+                        <Style TargetType="{x:Type DataGridRowHeader}">
+                            <Setter Property="Width" Value="25"/>
+                        </Style>
+                    </DataGrid.RowHeaderStyle>
+                    <DataGrid.CellStyle>
+                        <Style TargetType="{x:Type DataGridCell}">
+                            <EventSetter Event="PreviewMouseDown"
+                                         Handler="DataGridCell_PreviewMouseDown"/>
+                        </Style>
+                    </DataGrid.CellStyle>
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Priority"
+                                            Binding="{Binding Priority}"
+                                            />
+                        <DataGridCheckBoxColumn Header="Enabled" 
+                                                Binding="{Binding IsEnabled}"
+                                                />
+                        <DataGridCheckBoxColumn Header="Require Root"
+                                                Binding="{Binding RequireUnderRoot}"
+                                                />
+                        <DataGridTextColumn Header="Filter"
+                                            Binding="{Binding Filter}"
+                                            />
+                        <DataGridTextColumn Header="Cmd" 
+                                            Binding="{Binding Cmd}"
+                                            MinWidth="75"
+                                            />
+                        <DataGridTextColumn Header="Args" 
+                                            Binding="{Binding Args}"
+                                            Width="100*"
+                                            />
+                    </DataGrid.Columns>
+                </DataGrid>
+
+                <TextBlock Grid.Row="16"
+                           Grid.ColumnSpan="2"
+                           PreviewMouseDown="TextBlock_PreviewMouseDown"
+                           Text="{Binding SaveCommandsOutput}"/>
+            </Grid>
+        </ScrollViewer>
+        <StackPanel Grid.Row="1"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Right">
+            <Button x:Name="ImportCmd" 
+                    Width="100"
+                    Padding="6"
+                    Margin="4"
+                    Click="ImportCmd_Click">Import</Button>
+            <Button x:Name="ExportCmd" 
+                    Width="100"
+                    Padding="6"
+                    Margin="4"
+                    Click="ExportCmd_Click">Export</Button>
+        </StackPanel>
     </Grid>
 </UserControl>
