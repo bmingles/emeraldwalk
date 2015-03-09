@@ -14,6 +14,10 @@ namespace Emeraldwalk.Emeraldwalk_VsFileMirror.Model.Services
         public static string GetDirectoryPath(string filePath, char pathSeparator)
         {
             int index = filePath.LastIndexOf(pathSeparator);
+            if(index < 0)
+            {
+                return filePath;
+            }
             return filePath.Substring(0, index);
         }
 
