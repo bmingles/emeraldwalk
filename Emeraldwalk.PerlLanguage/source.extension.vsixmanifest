@@ -3,7 +3,8 @@
   <Metadata>
     <Identity Id="7cff5ad0-6526-4cab-801c-da7c501d7831" Version="1.0.1" Language="en-US" Publisher="Emeraldwalk" />
     <DisplayName>PerlLanguage</DisplayName>
-    <Description>Information about my package</Description>
+    <Description xml:space="preserve">Perl editor extension.</Description>
+    <License>LICENSE</License>
   </Metadata>
   <Installation InstalledByMsi="false">
     <InstallationTarget Id="Microsoft.VisualStudio.Pro" Version="[12.0]" />

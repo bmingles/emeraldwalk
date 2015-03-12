@@ -27,7 +27,7 @@ namespace Emeraldwalk.PerlLanguage.Perl.Tokens
             {
                 ITextSnapshotLine snapshotLine = span.Start.GetContainingLine();
                 string line = snapshotLine.GetText();
-                string[] lineTokens = Regex.Split(line, @"(\#\!.*|\#.*|""[^""]*""|'.*'|\s+|\(|\)|\{|\}|->)");
+                string[] lineTokens = Regex.Split(line, @"(\#\!.*|\#.*|""[^""]*""|'[^']*'|\s+|\(|\)|\{|\}|->)");
                 int pos = snapshotLine.Start.Position;
 
                 //int linePos = 0;
