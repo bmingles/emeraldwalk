@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Emeraldwalk.PerlLanguage.Classification
+namespace Emeraldwalk.PerlLanguage.Perl.Tokens
 {
     public static class TokenTypes
     {

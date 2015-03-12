@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
   <Metadata>
-    <Identity Id="7cff5ad0-6526-4cab-801c-da7c501d7831" Version="1.1" Language="en-US" Publisher="Emeraldwalk" />
+    <Identity Id="7cff5ad0-6526-4cab-801c-da7c501d7831" Version="1.0.1" Language="en-US" Publisher="Emeraldwalk" />
     <DisplayName>PerlLanguage</DisplayName>
     <Description>Information about my package</Description>
   </Metadata>

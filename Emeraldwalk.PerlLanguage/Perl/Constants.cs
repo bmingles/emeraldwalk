@@ -1,5 +1,5 @@
 ﻿
-namespace Emeraldwalk.PerlLanguage.Classification
+namespace Emeraldwalk.PerlLanguage.Perl
 {
     internal static class Constants
     {

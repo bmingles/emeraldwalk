@@ -128,11 +128,16 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Classification\Constants.cs" />
-    <Compile Include="Classification\PerlClassificationFormatDefinitions.cs" />
-    <Compile Include="Classification\PerlTaggers.cs" />
-    <Compile Include="Classification\PerlContentTypeDefinition.cs" />
-    <Compile Include="Classification\TokenTypes.cs" />
+    <Compile Include="Perl\Classification\ClassificationTypes.cs" />
+    <Compile Include="Perl\Classification\PerlClassificationTagger.cs" />
+    <Compile Include="Perl\Classification\PerlClassificationTaggerProvider.cs" />
+    <Compile Include="Perl\Constants.cs" />
+    <Compile Include="Perl\Classification\ClassificationFormats.cs" />
+    <Compile Include="Perl\PerlContentType.cs" />
+    <Compile Include="Perl\Tokens\PerlTokenTag.cs" />
+    <Compile Include="Perl\Tokens\PerlTokenTagger.cs" />
+    <Compile Include="Perl\Tokens\PerlTokenTaggerProvider.cs" />
+    <Compile Include="Perl\Tokens\TokenTypes.cs" />
     <Compile Include="Guids.cs" />
     <Compile Include="Resources.Designer.cs">
       <AutoGen>True</AutoGen>

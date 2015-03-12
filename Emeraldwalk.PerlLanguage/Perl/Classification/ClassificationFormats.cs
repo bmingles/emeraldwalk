@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
 
-namespace Emeraldwalk.PerlLanguage.Classification
+namespace Emeraldwalk.PerlLanguage.Perl.Classification
 {
     /// <summary>
     /// Keyword formatting
