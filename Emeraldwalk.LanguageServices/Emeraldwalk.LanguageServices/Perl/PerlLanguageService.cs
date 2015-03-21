@@ -74,11 +74,16 @@ namespace Emeraldwalk.Emeraldwalk_LanguageServices.Perl
                     this.Name);
 
                 this._languagePreferences.Init();
+
+                // Documentation shows that these properties can be set via the ProvideLanguageServiceAttribute.
+                // My observation has been that they don't actually get set, and various features just don't work unless you set them in code here.
+                // This could be something related to the experimental hive and not the case when installing for real, but not worth the time to dig into it.
                 this._languagePreferences.EnableCodeSense = true;
                 this._languagePreferences.EnableMatchBraces = true;
                 this._languagePreferences.EnableMatchBracesAtCaret = true;
                 this._languagePreferences.EnableShowMatchingBrace = true;
                 this._languagePreferences.AutoOutlining = true;
+                this._languagePreferences.MaxRegionTime = 2000; //Seems to be required to be + value in order for outlining to work. Documentation seems to be wrong saying this defaults to 2000 but really defaults to 0.
                 this._languagePreferences.EnableCommenting = true;
                 this._languagePreferences.LineNumbers = true;
             }
@@ -111,37 +116,44 @@ namespace Emeraldwalk.Emeraldwalk_LanguageServices.Perl
 
         public override AuthoringScope ParseSource(ParseRequest req)
         {
-            Source source = this.GetSource(req.FileName);
+            //Source source = this.GetSource(req.FileName);
+
+            TokenMatcher tokenMatcher = null;
+
             switch(req.Reason)
             {
-                //case ParseReason.Check:
+                case ParseReason.Check:
+                    tokenMatcher = TokenMatcher.ForTokenType(PerlTokenType.CurlyBrace);
+                    break;
+
                 case ParseReason.HighlightBraces:
-                    TokenMatcher tokenMatcher = TokenMatcher.ForTokenType(req.TokenInfo.Type);// ?? TokenMatcher.ForTokenType(PerlTokenType.CurlyBrace);
-                    
-                    if (tokenMatcher != null)
-                    {
-                        tokenMatcher.Parse(req.Text);
-                        foreach (Tuple<TextSpan, TextSpan> tokenPair in tokenMatcher.TokenPairs)
-                        {                            
-                            //if(req.Sink.HiddenRegions)//req.TokenInfo.Type == PerlTokenType.CurlyBrace)
-                            //{
-                            //    TextSpan hiddenSpan = new TextSpan
-                            //    {
-                            //        iStartLine = tokenPair.Item1.iStartLine,
-                            //        iStartIndex = tokenPair.Item1.iStartIndex,
-                            //        iEndLine = tokenPair.Item2.iEndLine,
-                            //        iEndIndex = tokenPair.Item2.iEndIndex
-                            //    };                                
-                            //    req.Sink.AddHiddenRegion(hiddenSpan);
-                            //    req.Sink.ProcessHiddenRegions = true;
-                            //}
-                            req.Sink.MatchPair(tokenPair.Item1, tokenPair.Item2, 1);
-                        }
-                    }
+                    tokenMatcher = TokenMatcher.ForTokenType(req.TokenInfo.Type);
                     break;
 
                 default:
                     break;
+            }
+
+            if (tokenMatcher != null)
+            {
+                tokenMatcher.Parse(req.Text);
+                foreach (Tuple<TextSpan, TextSpan> tokenPair in tokenMatcher.TokenPairs)
+                {
+                    req.Sink.MatchPair(tokenPair.Item1, tokenPair.Item2, 1);
+
+                    if (req.Sink.HiddenRegions)
+                    {
+                        TextSpan hiddenSpan = new TextSpan
+                        {
+                            iStartLine = tokenPair.Item1.iStartLine,
+                            iStartIndex = tokenPair.Item1.iStartIndex,
+                            iEndLine = tokenPair.Item2.iEndLine,
+                            iEndIndex = tokenPair.Item2.iEndIndex
+                        };
+                        req.Sink.AddHiddenRegion(hiddenSpan);
+                        req.Sink.ProcessHiddenRegions = true;
+                    }                    
+                }
             }
 
             return new PerlAuthoringScope();

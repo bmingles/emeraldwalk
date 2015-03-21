@@ -41,13 +41,14 @@ namespace Emeraldwalk.Emeraldwalk_LanguageServices
     [ProvideLanguageService(
         typeof(PerlLanguageService),
         PerlLanguageService.LANGUAGE_NAME,
-        PerlLanguageService.LANGUAGE_RESOURCE_ID,
-        CodeSense             = true,
-        RequestStockColors    = false,
-        EnableAsyncCompletion = true,
+        PerlLanguageService.LANGUAGE_RESOURCE_ID
+        //CodeSense             = true,
+        //RequestStockColors    = false,
+        //EnableAsyncCompletion = true,
         //MatchBraces           = true,
         //MatchBracesAtCaret    = true
-        AutoOutlining=true)]
+        //AutoOutlining=true)
+        )]
     //[ProvideAutoLoad(UIContextGuids80.SolutionExists)]
     [ProvideLanguageExtension(typeof(PerlLanguageService), ".pl")]
     public sealed class Emeraldwalk_LanguageServicesPackage : Package
