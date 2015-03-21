@@ -45,8 +45,9 @@ namespace Emeraldwalk.Emeraldwalk_LanguageServices
         CodeSense             = true,
         RequestStockColors    = false,
         EnableAsyncCompletion = true,
-        MatchBraces           = true,
-        MatchBracesAtCaret    = true)]
+        //MatchBraces           = true,
+        //MatchBracesAtCaret    = true
+        AutoOutlining=true)]
     //[ProvideAutoLoad(UIContextGuids80.SolutionExists)]
     [ProvideLanguageExtension(typeof(PerlLanguageService), ".pl")]
     public sealed class Emeraldwalk_LanguageServicesPackage : Package

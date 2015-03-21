@@ -79,6 +79,8 @@ namespace Emeraldwalk.Emeraldwalk_LanguageServices.Perl
                 this._languagePreferences.EnableMatchBracesAtCaret = true;
                 this._languagePreferences.EnableShowMatchingBrace = true;
                 this._languagePreferences.AutoOutlining = true;
+                this._languagePreferences.EnableCommenting = true;
+                this._languagePreferences.LineNumbers = true;
             }
 
             return this._languagePreferences;
@@ -109,19 +111,37 @@ namespace Emeraldwalk.Emeraldwalk_LanguageServices.Perl
 
         public override AuthoringScope ParseSource(ParseRequest req)
         {
-            //Source source = this.GetSource(req.FileName);
-            if(req.Reason == ParseReason.HighlightBraces)
+            Source source = this.GetSource(req.FileName);
+            switch(req.Reason)
             {
-                TokenMatcher tokenMatcher = TokenMatcher.ForTokenType(req.TokenInfo.Type);
-
-                if (tokenMatcher != null)
-                {
-                    tokenMatcher.Parse(req.Text);
-                    foreach (Tuple<TextSpan, TextSpan> tokenPair in tokenMatcher.TokenPairs)
+                //case ParseReason.Check:
+                case ParseReason.HighlightBraces:
+                    TokenMatcher tokenMatcher = TokenMatcher.ForTokenType(req.TokenInfo.Type);// ?? TokenMatcher.ForTokenType(PerlTokenType.CurlyBrace);
+                    
+                    if (tokenMatcher != null)
                     {
-                        req.Sink.MatchPair(tokenPair.Item1, tokenPair.Item2, 1);
+                        tokenMatcher.Parse(req.Text);
+                        foreach (Tuple<TextSpan, TextSpan> tokenPair in tokenMatcher.TokenPairs)
+                        {                            
+                            //if(req.Sink.HiddenRegions)//req.TokenInfo.Type == PerlTokenType.CurlyBrace)
+                            //{
+                            //    TextSpan hiddenSpan = new TextSpan
+                            //    {
+                            //        iStartLine = tokenPair.Item1.iStartLine,
+                            //        iStartIndex = tokenPair.Item1.iStartIndex,
+                            //        iEndLine = tokenPair.Item2.iEndLine,
+                            //        iEndIndex = tokenPair.Item2.iEndIndex
+                            //    };                                
+                            //    req.Sink.AddHiddenRegion(hiddenSpan);
+                            //    req.Sink.ProcessHiddenRegions = true;
+                            //}
+                            req.Sink.MatchPair(tokenPair.Item1, tokenPair.Item2, 1);
+                        }
                     }
-                }
+                    break;
+
+                default:
+                    break;
             }
 
             return new PerlAuthoringScope();

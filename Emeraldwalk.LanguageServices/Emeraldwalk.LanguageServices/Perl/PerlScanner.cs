@@ -26,7 +26,7 @@ namespace Emeraldwalk.Emeraldwalk_LanguageServices.Perl
             this._offset = 0;
             this._tokenIndex = 0;
             this._sourceLineTokens = Regex
-                .Split(source, @"(\#\!.*|\#.*|""[^""]*""|'[^']*'|\s+|\(|\)|\{|\}|->)")
+                .Split(source, @"(\#\!.*|\#.*|""[^""]*""|'[^']*'|\s+|\(|\)|\{|\}|\[|\]|->)")
                 .Where(token => token.Length > 0)
                 .ToList();
 
