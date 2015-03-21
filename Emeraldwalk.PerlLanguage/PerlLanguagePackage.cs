@@ -1,13 +1,18 @@
-﻿using System;
-using System.Diagnostics;
-using System.Globalization;
-using System.Runtime.InteropServices;
-using System.ComponentModel.Design;
-using Microsoft.Win32;
-using Microsoft.VisualStudio;
-using Microsoft.VisualStudio.Shell.Interop;
+﻿using Microsoft.VisualStudio;
+using Microsoft.VisualStudio.ComponentModelHost;
 using Microsoft.VisualStudio.OLE.Interop;
 using Microsoft.VisualStudio.Shell;
+using Microsoft.VisualStudio.Shell.Interop;
+using Microsoft.VisualStudio.Utilities;
+using Microsoft.Win32;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.Composition;
+using System.ComponentModel.Design;
+using System.Diagnostics;
+using System.Globalization;
+using System.Linq;
+using System.Runtime.InteropServices;
 
 namespace Emeraldwalk.PerlLanguage
 {
@@ -27,6 +32,7 @@ namespace Emeraldwalk.PerlLanguage
     // This attribute is used to register the information needed to show this package
     // in the Help/About dialog of Visual Studio.
     [InstalledProductRegistration("#110", "#112", "1.0", IconResourceID = 400)]
+    [ProvideAutoLoad(UIContextGuids80.SolutionExists)]
     [Guid(GuidList.guidPerlLanguagePkgString)]
     public sealed class PerlLanguagePackage : Package
     {
@@ -42,8 +48,6 @@ namespace Emeraldwalk.PerlLanguage
             Debug.WriteLine(string.Format(CultureInfo.CurrentCulture, "Entering constructor for: {0}", this.ToString()));
         }
 
-
-
         /////////////////////////////////////////////////////////////////////////////
         // Overridden Package Implementation
         #region Package Members
@@ -57,6 +61,24 @@ namespace Emeraldwalk.PerlLanguage
             Debug.WriteLine(string.Format(CultureInfo.CurrentCulture, "Entering Initialize() of: {0}", this.ToString()));
             base.Initialize();
 
+            IComponentModel componentModel = (IComponentModel)this.GetService(typeof(SComponentModel));
+            IContentTypeRegistryService contentTypeRegistryService = componentModel.GetService<IContentTypeRegistryService>();
+            IFileExtensionRegistryService fileExtensionRegistryService = componentModel.GetService<IFileExtensionRegistryService>();
+
+            IContentType perlContentType = contentTypeRegistryService.GetContentType(Perl.Constants.ContentType);
+            if (perlContentType != null)
+            {
+                IList<string> exts = fileExtensionRegistryService.GetExtensionsForContentType(perlContentType).ToList();
+                foreach (string ext in exts)
+                {
+                    fileExtensionRegistryService.RemoveFileExtension(ext);
+                }
+
+                contentTypeRegistryService.RemoveContentType(Perl.Constants.ContentType);
+            }
+
+            perlContentType = contentTypeRegistryService.AddContentType(Perl.Constants.ContentType, new List<string> { "code" });
+            fileExtensionRegistryService.AddFileExtension(".pm", perlContentType);
         }
         #endregion
 
