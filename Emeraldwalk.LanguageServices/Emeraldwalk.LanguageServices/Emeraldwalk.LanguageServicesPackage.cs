@@ -51,6 +51,7 @@ namespace Emeraldwalk.Emeraldwalk_LanguageServices
         )]
     //[ProvideAutoLoad(UIContextGuids80.SolutionExists)]
     [ProvideLanguageExtension(typeof(PerlLanguageService), ".pl")]
+    [ProvideLanguageExtension(typeof(PerlLanguageService), ".pm")]
     public sealed class Emeraldwalk_LanguageServicesPackage : Package
     {
         private IdleHandler _idleHandler { get; set; }
